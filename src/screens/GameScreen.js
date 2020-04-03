@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 
@@ -19,14 +19,42 @@ const generateRandomBetween = (min, max, exclude) => {
 const GameScreen = ({ userGuess }) => {
     // Once state is set, it won't be overwritten by useState on re-renders
     const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, userGuess));
+    const currentMin = useRef(1);
+    const currentMax = useRef(100);
+
+    const nextGuessHandler = direction => {
+        console.log(direction, currentGuess, userGuess);
+        if ((direction === 'lower' && currentGuess < userGuess) ||
+            (direction === 'greater' && currentGuess > userGuess)) {
+            Alert.alert('Liar!', 'Comon that isn\'t true.', 
+            [{ text: 'Sorry!', style: 'cancel' }]);
+            return;
+        }
+
+        // Doesn't re-render component since useRef is being used
+        if (direction === 'lower') {
+            currentMax.current = currentGuess;
+        } else {
+            currentMin.current = currentGuess;
+        }
+
+        const nextNumberGuess = generateRandomBetween(currentMin.current, currentMax.current, currentGuess);
+        setCurrentGuess(nextNumberGuess);
+    };
 
     return (
         <View style={styles.screenStyle}>
             <Text>Opponent's Guess:</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonCardStyle}>
-                <Button title="LOWER" />
-                <Button title="GREATER" />
+                <Button 
+                    title="LOWER"
+                    onPress={() => nextGuessHandler('lower')} 
+                />
+                <Button 
+                    title="GREATER"
+                    onPress={() => nextGuessHandler('greater')}
+                />
             </Card>
         </View>
     );

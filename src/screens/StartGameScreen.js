@@ -40,7 +40,7 @@ const StartGameScreen = ({ startGameHandler }) => {
                             </NumberContainer>
                             <Button 
                                 title='Start Game'
-                                onPress={startGameHandler}
+                                onPress={() => startGameHandler(officialGuess)}
                             />
                         </Card>;
     }
