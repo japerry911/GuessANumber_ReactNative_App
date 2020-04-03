@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     screenStyle: {
         flex: 1,
         padding: 10,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     buttonCardStyle: {
         flexDirection: 'row',

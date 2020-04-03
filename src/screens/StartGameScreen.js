@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Card from '../components/Card';
-import Input from '../components/Input';
+import InputText from '../components/InputText';
 import NumberContainer from '../components/NumberContainer';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
 
 const StartGameScreen = ({ startGameHandler }) => {
     const [inputNumber, setInputNumber] = useState('');
@@ -34,9 +36,9 @@ const StartGameScreen = ({ startGameHandler }) => {
 
     if (confirmed) {
         confirmedNumber = <Card style={styles.officialNumberViewStyle}>
-                            <Text>You Selected:</Text>
+                            <BodyText>You Selected:</BodyText>
                             <NumberContainer>
-                                <Text>{officialNumber}</Text>
+                                <BodyText>{officialNumber}</BodyText>
                             </NumberContainer>
                             <Button 
                                 title='Start Game'
@@ -48,11 +50,11 @@ const StartGameScreen = ({ startGameHandler }) => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.screenStyle}>
-                <Text style={styles.titleStyle}>Start a New Game!</Text>
+                <TitleText>Start a New Game!</TitleText>
                 <View style={styles.inputViewStyle}>
                     <Card style={styles.inputCardStyle}>
-                        <Text>Select a Number</Text>
-                        <Input 
+                        <BodyText>Select a Number</BodyText>
+                        <InputText 
                             style={styles.textInputStyle} 
                             keyboardType='numeric' 
                             maxLength={2}
@@ -113,7 +115,8 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         fontSize: 20,
-        marginVertical: 10
+        marginVertical: 10,
+        fontFamily: 'open-sans-bold'
     },
     screenStyle: {
         flex: 1,
