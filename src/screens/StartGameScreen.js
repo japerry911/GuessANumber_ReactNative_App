@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Button } from 'react-native';
 import Card from '../components/Card';
+import Input from '../components/Input';
 
 const StartGameScreen = () => {
     return (
@@ -9,10 +10,20 @@ const StartGameScreen = () => {
             <View style={styles.inputViewStyle}>
                 <Card style={styles.inputCardStyle}>
                     <Text>Select a Number</Text>
-                    <TextInput />
+                    <Input style={styles.textInputStyle} keyboardType='numeric' maxLength={2}/>
                     <View style={styles.buttonViewStyle}>
-                        <Button title='Reset' />
-                        <Button title='Confirm' />
+                        <View style={styles.resetButtonStyle}>
+                            <Button 
+                                title='Reset' 
+                                color='black'
+                            />
+                        </View>
+                        <View style={styles.confirmButtonStyle}>
+                            <Button 
+                                title='Confirm' 
+                                color='black'
+                            />
+                        </View>
                     </View>
                 </Card>
             </View>
@@ -21,10 +32,23 @@ const StartGameScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    resetButtonStyle: {
+        backgroundColor: '#ff9999',
+        marginRight: 5,
+        flex: 1,
+        borderRadius: 10
+    }, 
+    confirmButtonStyle: {
+        backgroundColor: 'lightgreen',
+        marginLeft: 5, 
+        flex: 1,
+        borderRadius: 10
+    },
     inputCardStyle: {
         width: 300,
         maxWidth: '80%',
         alignItems: 'center',
+        marginTop: 15
     },
     titleStyle: {
         fontSize: 20,
@@ -39,8 +63,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        width: '100%',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+    },
+    textInputStyle: {
+        width: 50,
+        textAlign: 'center'
     }
 });
 
