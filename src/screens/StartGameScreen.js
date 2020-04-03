@@ -1,27 +1,30 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Button } from 'react-native';
+import Card from '../components/Card';
 
 const StartGameScreen = () => {
     return (
         <View style={styles.screenStyle}>
             <Text style={styles.titleStyle}>Start a New Game!</Text>
             <View style={styles.inputViewStyle}>
-                <Text>Select a Number</Text>
-                <TextInput />
-                <View style={styles.buttonViewStyle}>
-                    <Button title='Reset' />
-                    <Button title='Confirm' />
-                </View>
+                <Card style={styles.inputCardStyle}>
+                    <Text>Select a Number</Text>
+                    <TextInput />
+                    <View style={styles.buttonViewStyle}>
+                        <Button title='Reset' />
+                        <Button title='Confirm' />
+                    </View>
+                </Card>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    inputViewStyle: {
+    inputCardStyle: {
         width: 300,
         maxWidth: '80%',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     titleStyle: {
         fontSize: 20,
