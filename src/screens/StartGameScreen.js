@@ -1,33 +1,47 @@
-import React from 'react';
-import { View, StyleSheet, Text, TextInput, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Card from '../components/Card';
 import Input from '../components/Input';
 
 const StartGameScreen = () => {
+    const [guess, setGuess] = useState('');
+
+    const inputGuessHandler = inputGuess => {
+        setGuess(inputGuess.replace(/[^0-9]/g, ''));
+    };
+
     return (
-        <View style={styles.screenStyle}>
-            <Text style={styles.titleStyle}>Start a New Game!</Text>
-            <View style={styles.inputViewStyle}>
-                <Card style={styles.inputCardStyle}>
-                    <Text>Select a Number</Text>
-                    <Input style={styles.textInputStyle} keyboardType='numeric' maxLength={2}/>
-                    <View style={styles.buttonViewStyle}>
-                        <View style={styles.resetButtonStyle}>
-                            <Button 
-                                title='Reset' 
-                                color='black'
-                            />
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={styles.screenStyle}>
+                <Text style={styles.titleStyle}>Start a New Game!</Text>
+                <View style={styles.inputViewStyle}>
+                    <Card style={styles.inputCardStyle}>
+                        <Text>Select a Number</Text>
+                        <Input 
+                            style={styles.textInputStyle} 
+                            keyboardType='numeric' 
+                            maxLength={2}
+                            onChangeText={inputGuessHandler}
+                            value={guess}
+                        />
+                        <View style={styles.buttonViewStyle}>
+                            <View style={styles.resetButtonStyle}>
+                                <Button 
+                                    title='Reset' 
+                                    color='black'
+                                />
+                            </View>
+                            <View style={styles.confirmButtonStyle}>
+                                <Button 
+                                    title='Confirm' 
+                                    color='black'
+                                />
+                            </View>
                         </View>
-                        <View style={styles.confirmButtonStyle}>
-                            <Button 
-                                title='Confirm' 
-                                color='black'
-                            />
-                        </View>
-                    </View>
-                </Card>
+                    </Card>
+                </View>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     );
 };
 
