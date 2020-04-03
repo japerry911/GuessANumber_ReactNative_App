@@ -16,11 +16,18 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 };
 
-const GameScreen = ({ userGuess }) => {
+const GameScreen = ({ userGuess, onGameOver }) => {
     // Once state is set, it won't be overwritten by useState on re-renders
     const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, userGuess));
+    const [numOfGuesses, setNumOfGuesses] = useState(0);
     const currentMin = useRef(1);
     const currentMax = useRef(100);
+
+    useEffect(() => {
+        if (currentGuess === userGuess) {
+            onGameOver(numOfGuesses)
+        }
+    });
 
     const nextGuessHandler = direction => {
         console.log(direction, currentGuess, userGuess);
@@ -38,6 +45,8 @@ const GameScreen = ({ userGuess }) => {
             currentMin.current = currentGuess;
         }
 
+        setNumOfGuesses(numOfGuesses + 1);
+        
         const nextNumberGuess = generateRandomBetween(currentMin.current, currentMax.current, currentGuess);
         setCurrentGuess(nextNumberGuess);
     };
