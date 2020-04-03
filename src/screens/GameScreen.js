@@ -27,7 +27,7 @@ const GameScreen = ({ userGuess, onGameOver }) => {
         if (currentGuess === userGuess) {
             onGameOver(numOfGuesses)
         }
-    });
+    }, [currentGuess, userGuess, onGameOver]);
 
     const nextGuessHandler = direction => {
         console.log(direction, currentGuess, userGuess);
@@ -46,7 +46,7 @@ const GameScreen = ({ userGuess, onGameOver }) => {
         }
 
         setNumOfGuesses(numOfGuesses + 1);
-        
+
         const nextNumberGuess = generateRandomBetween(currentMin.current, currentMax.current, currentGuess);
         setCurrentGuess(nextNumberGuess);
     };
