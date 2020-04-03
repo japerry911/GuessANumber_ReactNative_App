@@ -1,14 +1,48 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Card from '../components/Card';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 
 const StartGameScreen = () => {
     const [guess, setGuess] = useState('');
-
+    const [confirmed, setConfirmed] = useState(false);
+    const [officialGuess, setOfficialGuess] = useState('');
+    
     const inputGuessHandler = inputGuess => {
         setGuess(inputGuess.replace(/[^0-9]/g, ''));
     };
+
+    const resetInputHandler = () => {
+        setGuess('');
+        setConfirmed(false);
+    };
+
+    const confirmInputHandler = () => {
+        const chosenNumber = parseInt(guess);
+        if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+            Alert.alert('Invalid Number!', 'Number has to be a number between 1 and 99 (Including).', 
+            [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }])
+            return;
+        }
+        setConfirmed(true);
+        setOfficialGuess(chosenNumber);
+        setGuess('');
+    };
+
+    let confirmedGuess;
+
+    if (confirmed) {
+        confirmedGuess = <Card style={styles.officialGuessViewStyle}>
+                            <Text>You Selected:</Text>
+                            <NumberContainer>
+                                <Text>{officialGuess}</Text>
+                            </NumberContainer>
+                            <Button 
+                                title='Start Game'
+                            />
+                        </Card>;
+    }
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -29,16 +63,19 @@ const StartGameScreen = () => {
                                 <Button 
                                     title='Reset' 
                                     color='black'
+                                    onPress={resetInputHandler}
                                 />
                             </View>
                             <View style={styles.confirmButtonStyle}>
                                 <Button 
                                     title='Confirm' 
                                     color='black'
+                                    onPress={confirmInputHandler}
                                 />
                             </View>
                         </View>
                     </Card>
+                    {confirmedGuess}
                 </View>
             </View>
         </TouchableWithoutFeedback>
@@ -46,6 +83,15 @@ const StartGameScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    officialGuessViewStyle: {
+        marginTop: 40,
+        alignItems: 'center'
+    },
+    officialGuessStyle: {
+    },
+    inputViewStyle: {
+        alignItems: 'center'
+    },
     resetButtonStyle: {
         backgroundColor: '#ff9999',
         marginRight: 5,
