@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Button, Image, ImageBackground } from 'react-native';
+import { View, StyleSheet, Button, Image, ImageBackground, Text } from 'react-native';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
+import Colors from '../constants/colors';
 
 const GameOverScreen = ({ guesses, userNumber, newGameHandler, imageSrc }) => {
     return (
@@ -20,8 +21,12 @@ const GameOverScreen = ({ guesses, userNumber, newGameHandler, imageSrc }) => {
                     />
                 </View>
                 <View style={styles.subtitleViewStyle}>
-                    <BodyText style={styles.textStyle}>Number of Guesses: {guesses}</BodyText>
-                    <BodyText style={styles.lastTextStyle}>Number was: {userNumber}</BodyText>
+                    <BodyText style={styles.textStyle}>
+                        Number of Guesses: <Text style={styles.hightlightStyle}>{guesses}</Text>
+                    </BodyText>
+                    <BodyText style={styles.lastTextStyle}>
+                        Number was: <Text style={styles.hightlightStyle}>{userNumber}</Text>
+                    </BodyText>
                 </View>
                 <View style={styles.buttonViewStyle}>
                     <Button 
@@ -36,16 +41,27 @@ const GameOverScreen = ({ guesses, userNumber, newGameHandler, imageSrc }) => {
 };
 
 const styles = StyleSheet.create({
+    hightlightStyle: {
+        color: Colors.primary
+    },
     buttonViewStyle: {
         marginTop: 20,
         borderWidth: 5,
         backgroundColor: '#4d4d4d',
         borderRadius: 20,
+        borderColor: Colors.primary,
+        borderWidth: 3,
+        shadowOffset: { height: 10, width: 10 },
+        shadowOpacity: 1
     },
     subtitleViewStyle: {
+        borderColor: Colors.primary,
+        borderWidth: 3,
         backgroundColor: '#4d4d4d',
         padding: 10,
-        borderRadius: 20
+        borderRadius: 20,
+        shadowOffset: { height: 10, width: 10 },
+        shadowOpacity: 1
     },
     whiteTextStyle: {
         color: 'white'
@@ -62,17 +78,13 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     imageViewStyle: {
-        height: 400,
-        width: 300,
+        height: 300,
+        width: 200,
         borderRadius: 200,
         borderWidth: 3,
-        borderColor: 'black',
+        borderColor: Colors.primary,
         overflow: 'hidden',
-        transform: [
-            { rotateX: '20deg' },
-            { rotateY: '20deg' }
-        ],
-        marginVertical: 30
+        marginVertical: 50
     },
     imageStyle: {
         width: '100%',
