@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Button, Image, ImageBackground, Text } from 'react-native';
+import { View, StyleSheet, Image, ImageBackground, Text } from 'react-native';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import Colors from '../constants/colors';
+import MainButton from '../components/MainButton';
 
 const GameOverScreen = ({ guesses, userNumber, newGameHandler, imageSrc }) => {
     return (
@@ -28,13 +29,11 @@ const GameOverScreen = ({ guesses, userNumber, newGameHandler, imageSrc }) => {
                         Number was: <Text style={styles.hightlightStyle}>{userNumber}</Text>
                     </BodyText>
                 </View>
-                <View style={styles.buttonViewStyle}>
-                    <Button 
-                        title='NEW GAME'
-                        onPress={newGameHandler}
-                        color='white'
-                    />
-                </View>
+                <MainButton 
+                    onPress={newGameHandler}
+                >
+                    NEW GAME
+                </MainButton>
             </View>
         </ImageBackground>
     );
@@ -44,16 +43,6 @@ const styles = StyleSheet.create({
     hightlightStyle: {
         color: Colors.primary
     },
-    buttonViewStyle: {
-        marginTop: 20,
-        borderWidth: 5,
-        backgroundColor: '#4d4d4d',
-        borderRadius: 20,
-        borderColor: Colors.primary,
-        borderWidth: 3,
-        shadowOffset: { height: 10, width: 10 },
-        shadowOpacity: 1
-    },
     subtitleViewStyle: {
         borderColor: Colors.primary,
         borderWidth: 3,
@@ -61,7 +50,8 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         shadowOffset: { height: 10, width: 10 },
-        shadowOpacity: 1
+        shadowOpacity: 1,
+        marginBottom: 30
     },
     whiteTextStyle: {
         color: 'white'
