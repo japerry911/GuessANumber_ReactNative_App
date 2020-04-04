@@ -7,29 +7,29 @@ const GameOverScreen = ({ guesses, userNumber, newGameHandler, imageSrc }) => {
     return (
         <ImageBackground 
             style={styles.screenStyle}
-            source={{ uri: 'https://wallpaperaccess.com/full/325243.jpg' }}
+            source={require('../../assets/GuessBackground.jpg')}
         >
             <View style={styles.screenStyle}>
-            <View style={styles.subtitleViewStyle}>
-            <TitleText style={styles.whiteTextStyle}>Game Over, Sky Guessed Your Number!</TitleText>
-            </View>
-            <View style={styles.imageViewStyle}>
-                <Image 
-                    style={styles.imageStyle} 
-                    source={require('../../assets/SuccessSkylord.png')} 
-                />
-            </View>
-            <View style={styles.subtitleViewStyle}>
-            <BodyText style={styles.textStyle}>Number of Guesses: {guesses}</BodyText>
-            <BodyText style={styles.lastTextStyle}>Number was: {userNumber}</BodyText>
-            </View>
-            <View style={styles.buttonViewStyle}>
-            <Button 
-                title='NEW GAME'
-                onPress={newGameHandler}
-                color='white'
-            />
-            </View>
+                <View style={styles.subtitleViewStyle}>
+                    <TitleText style={styles.whiteTextStyle}>Game Over, Sky Guessed Your Number!</TitleText>
+                </View>
+                <View style={styles.imageViewStyle}>
+                    <Image 
+                        style={styles.imageStyle} 
+                        source={require('../../assets/SuccessSkylord.png')} 
+                    />
+                </View>
+                <View style={styles.subtitleViewStyle}>
+                    <BodyText style={styles.textStyle}>Number of Guesses: {guesses}</BodyText>
+                    <BodyText style={styles.lastTextStyle}>Number was: {userNumber}</BodyText>
+                </View>
+                <View style={styles.buttonViewStyle}>
+                    <Button 
+                        title='NEW GAME'
+                        onPress={newGameHandler}
+                        color='white'
+                    />
+                </View>
             </View>
         </ImageBackground>
     );

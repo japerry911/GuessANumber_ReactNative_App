@@ -6,6 +6,7 @@ import GameScreen from './src/screens/GameScreen';
 import GameOverScreen from './src/screens/GameOverScreen';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset'
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -14,18 +15,36 @@ const fetchFonts = () => {
   });
 };
 
+const cacheResourceAsync = async () => {
+  const images = [require('./assets/GuessBackground.jpg')];
+
+  const cacheImages = images.map(image => {
+    return Asset.fromModule(image).downloadAsync();
+  });
+
+  return Promise.all(cacheImages);
+}
+
+
 export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [guesses, setGuesses] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
+  const _loadAssetsAsync = async () => {
+    const fontAssets = fetchFonts();
+    const imageAssets = cacheResourceAsync();
+  
+    await Promise.all([imageAssets, fontAssets]);
+  }
+
   if (!isLoading) {
     console.log('here');
     return (
       <AppLoading 
-        startAsync={fetchFonts} 
+        startAsync={_loadAssetsAsync} 
         onFinish={() => setIsLoading(true)}
-        onError={error => console.log(error)}
+        onError={error => console.error(error)}
       />
     );
   }
