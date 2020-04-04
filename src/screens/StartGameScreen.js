@@ -5,6 +5,7 @@ import InputText from '../components/InputText';
 import NumberContainer from '../components/NumberContainer';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
 
 const StartGameScreen = ({ startGameHandler }) => {
     const [inputNumber, setInputNumber] = useState('');
@@ -40,10 +41,11 @@ const StartGameScreen = ({ startGameHandler }) => {
                             <NumberContainer>
                                 <BodyText>{officialNumber}</BodyText>
                             </NumberContainer>
-                            <Button 
-                                title='Start Game'
+                            <MainButton 
                                 onPress={() => startGameHandler(officialNumber)}
-                            />
+                            >
+                                START GAME
+                            </MainButton>
                         </Card>;
     }
 
