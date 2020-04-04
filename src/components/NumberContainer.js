@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Colors from '../constants/colors';
+import BodyText from '../components/BodyText';
 
 const NumberContainer = ({ children }) => {
     return (
         <View style={styles.viewStyle}>
-            <Text style={styles.numberTextStyle}>{children}</Text>
+            <BodyText style={styles.numberTextStyle}>{children}</BodyText>
         </View>
     );
 };

@@ -16,16 +16,22 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 };
 
-const GameScreen = ({ userGuess }) => {
+const GameScreen = ({ userNumber, onGameOver }) => {
     // Once state is set, it won't be overwritten by useState on re-renders
-    const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, userGuess));
+    const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, userNumber));
+    const [numOfGuesses, setNumOfGuesses] = useState(0);
     const currentMin = useRef(1);
     const currentMax = useRef(100);
 
+    useEffect(() => {
+        if (currentGuess === userNumber) {
+            onGameOver(numOfGuesses)
+        }
+    }, [currentGuess, userNumber, onGameOver]);
+
     const nextGuessHandler = direction => {
-        console.log(direction, currentGuess, userGuess);
-        if ((direction === 'lower' && currentGuess < userGuess) ||
-            (direction === 'greater' && currentGuess > userGuess)) {
+        if ((direction === 'lower' && currentGuess < userNumber) ||
+            (direction === 'greater' && currentGuess > userNumber)) {
             Alert.alert('Liar!', 'Comon that isn\'t true.', 
             [{ text: 'Sorry!', style: 'cancel' }]);
             return;
@@ -37,6 +43,8 @@ const GameScreen = ({ userGuess }) => {
         } else {
             currentMin.current = currentGuess;
         }
+
+        setNumOfGuesses(numOfGuesses + 1);
 
         const nextNumberGuess = generateRandomBetween(currentMin.current, currentMax.current, currentGuess);
         setCurrentGuess(nextNumberGuess);
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
     screenStyle: {
         flex: 1,
         padding: 10,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     buttonCardStyle: {
         flexDirection: 'row',

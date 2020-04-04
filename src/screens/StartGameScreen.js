@@ -1,46 +1,48 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Card from '../components/Card';
-import Input from '../components/Input';
+import InputText from '../components/InputText';
 import NumberContainer from '../components/NumberContainer';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
 
 const StartGameScreen = ({ startGameHandler }) => {
-    const [guess, setGuess] = useState('');
+    const [inputNumber, setInputNumber] = useState('');
     const [confirmed, setConfirmed] = useState(false);
-    const [officialGuess, setOfficialGuess] = useState('');
+    const [officialNumber, setOfficialNumber] = useState('');
     
-    const inputGuessHandler = inputGuess => {
-        setGuess(inputGuess.replace(/[^0-9]/g, ''));
+    const inputNumberHandler = inputNumber => {
+        setInputNumber(inputNumber.replace(/[^0-9]/g, ''));
     };
 
     const resetInputHandler = () => {
-        setGuess('');
+        setInputNumber('');
         setConfirmed(false);
     };
 
     const confirmInputHandler = () => {
-        const chosenNumber = parseInt(guess);
+        const chosenNumber = parseInt(inputNumber);
         if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
             Alert.alert('Invalid Number!', 'Number has to be a number between 1 and 99 (Including).', 
             [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }])
             return;
         }
         setConfirmed(true);
-        setOfficialGuess(chosenNumber);
-        setGuess('');
+        setOfficialNumber(chosenNumber);
+        setInputNumber('');
     };
 
-    let confirmedGuess;
+    let confirmedNumber;
 
     if (confirmed) {
-        confirmedGuess = <Card style={styles.officialGuessViewStyle}>
-                            <Text>You Selected:</Text>
+        confirmedNumber = <Card style={styles.officialNumberViewStyle}>
+                            <BodyText>You Selected:</BodyText>
                             <NumberContainer>
-                                <Text>{officialGuess}</Text>
+                                <BodyText>{officialNumber}</BodyText>
                             </NumberContainer>
                             <Button 
                                 title='Start Game'
-                                onPress={() => startGameHandler(officialGuess)}
+                                onPress={() => startGameHandler(officialNumber)}
                             />
                         </Card>;
     }
@@ -48,16 +50,16 @@ const StartGameScreen = ({ startGameHandler }) => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.screenStyle}>
-                <Text style={styles.titleStyle}>Start a New Game!</Text>
+                <TitleText>Start a New Game!</TitleText>
                 <View style={styles.inputViewStyle}>
                     <Card style={styles.inputCardStyle}>
-                        <Text>Select a Number</Text>
-                        <Input 
+                        <BodyText>Select a Number</BodyText>
+                        <InputText 
                             style={styles.textInputStyle} 
                             keyboardType='numeric' 
                             maxLength={2}
-                            onChangeText={inputGuessHandler}
-                            value={guess}
+                            onChangeText={inputNumberHandler}
+                            value={inputNumber}
                         />
                         <View style={styles.buttonViewStyle}>
                             <View style={styles.resetButtonStyle}>
@@ -76,7 +78,7 @@ const StartGameScreen = ({ startGameHandler }) => {
                             </View>
                         </View>
                     </Card>
-                    {confirmedGuess}
+                    {confirmedNumber}
                 </View>
             </View>
         </TouchableWithoutFeedback>
@@ -84,11 +86,11 @@ const StartGameScreen = ({ startGameHandler }) => {
 };
 
 const styles = StyleSheet.create({
-    officialGuessViewStyle: {
+    officialNumberViewStyle: {
         marginTop: 40,
         alignItems: 'center'
     },
-    officialGuessStyle: {
+    officialNumberStyle: {
     },
     inputViewStyle: {
         alignItems: 'center'
@@ -113,7 +115,8 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         fontSize: 20,
-        marginVertical: 10
+        marginVertical: 10,
+        fontFamily: 'open-sans-bold'
     },
     screenStyle: {
         flex: 1,
