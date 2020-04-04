@@ -16,7 +16,9 @@ const fetchFonts = () => {
 };
 
 const cacheResourceAsync = async () => {
-  const images = [require('./assets/GuessBackground.jpg')];
+  const images = [require('./assets/GuessBackground.jpg'), 
+                  require('./assets/PlayingSkylord.png'),
+                  require('./assets/SuccessSkylord.png')];
 
   const cacheImages = images.map(image => {
     return Asset.fromModule(image).downloadAsync();

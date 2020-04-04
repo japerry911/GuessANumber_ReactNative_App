@@ -1,8 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, Image } from 'react-native';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import MainButton from '../components/MainButton';
+import { Ionicons } from '@expo/vector-icons';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
+import Colors from '../constants/colors';
 
 const generateRandomBetween = (min, max, exclude) => {
     min = Math.ceil(min);
@@ -53,25 +57,62 @@ const GameScreen = ({ userNumber, onGameOver }) => {
 
     return (
         <View style={styles.screenStyle}>
-            <Text>Opponent's Guess:</Text>
+            <TitleText>Skylord's Guess:</TitleText>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonCardStyle}>
                 <MainButton 
                     onPress={() => nextGuessHandler('lower')} 
                 >
-                    LOWER
+                    <Ionicons 
+                        name='md-remove' 
+                        size={24}
+                        color='white'
+                    />
                 </MainButton>
                 <MainButton 
                     onPress={() => nextGuessHandler('greater')}
                 >
-                    GREATER
+                    <Ionicons
+                        name='md-add'
+                        size={24}
+                        color='white'
+                    />
                 </MainButton>
             </Card>
+            <Card style={styles.directionsCardStyle}>
+                <TitleText style={styles.directionsTitleStyle}>Directions:</TitleText>
+                <BodyText>
+                    Press the - button if Skylord's Guess is lower than your number, otherwise
+                    if it's greater, press the + button.
+                </BodyText>
+            </Card>
+            <View style={styles.imageViewStyle}>
+                <Image 
+                    style={styles.imageStyle}
+                    source={require('../../assets/PlayingSkylord.png')}
+                />
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    imageViewStyle: {
+        borderRadius: 200,
+        borderColor: Colors.primary,
+        borderWidth: 3,
+        overflow: 'hidden',
+        width: 300,
+        height: 300
+    },
+    imageStyle: {
+        height: '100%',
+        width: '100%'
+    },
+    directionsTitleStyle: {
+        textAlign: 'center',
+        marginBottom: 10
+    },
     screenStyle: {
         flex: 1,
         padding: 10,
@@ -82,7 +123,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginTop: 20,
         width: 400,
-        maxWidth: '90%'
+        maxWidth: '70%'
+    },
+    directionsCardStyle: {
+        marginVertical: 50
     }
 });
 
